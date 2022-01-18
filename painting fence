@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		int d = 0;
+		
+		boolean[] arr = new boolean[101];
+		
+		int count = 0;	//구간 길이
+		
+		a = sc.nextInt();
+		b = sc.nextInt();
+		c = sc.nextInt();
+		d = sc.nextInt();
+		
+		for (int i=0; i<=100; i++) {
+			arr[i] = true;
+		}
+		
+		//존이 색칠한 울타리 범위
+		for (int i=a; i<b; i++) {
+			arr[i] = false;
+		}
+		
+		//윌리가 색칠한 울타리 범위
+		for (int i=c; i<d; i++) {
+			arr[i] = false;
+		}
+		
+		//false 개수 세기 (색칠한 울타리 길이 구하기)
+		for (int i=0; i<=100; i++) {
+			if (!arr[i]) {
+				count += 1;
+			}
+		}
+		System.out.println(count);
+	}
+
+}
