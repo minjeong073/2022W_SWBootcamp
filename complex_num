@@ -1,0 +1,74 @@
+import java.io.*;
+import java.util.Arrays;
+
+public class main {
+	static int[][] arr;
+	static int N;
+	static boolean[][] visit;
+	static int count= 1;
+	static int[] dx = {0,0,-1,1};
+	static int[] dy = {1,-1,0,0};
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		N = Integer.parseInt(br.readLine());
+		arr = new int[N][N];
+		
+		for (int i=0; i<N; i++) {
+			String[] str = br.readLine().split("");
+			for (int j=0; j<N; j++) {
+				arr[i][j] = Integer.parseInt(str[j]);
+			}
+		}
+		
+		visit = new boolean[N][N];
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<N; j++) {
+				//집 있고, 방문하지 않은 경우만 실행
+				if (arr[i][j] == 1 && !visit[i][j]) {
+					dfs(i,j);
+					count++;	//다음 단지 수
+				}
+			}
+		}
+		
+		System.out.println("총 단지 수 : "+(count-1));
+		
+		//단지별 집 수
+		int[] num = new int[count];
+		
+		for (int i=0; i<N; i++) {
+			for (int j=0; j<N; j++) {
+				if (arr[i][j] != 0) {
+					num[arr[i][j]]++;
+				}
+			}
+		}
+		
+		Arrays.sort(num);
+		for (int i=1; i<num.length; i++) {
+			System.out.println(num[i]);
+		}
+	}
+	
+	public static void dfs(int i, int j) {
+		arr[i][j] = count;	//방문한 경우 단지수로 바꿈
+		visit[i][j] = true;
+		
+		//그 다음 탐색할 집(상,하,좌,우)
+		for (int k=0; k<4; k++) {
+			int ni = i + dx[k];
+			int nj = j + dy[k];
+			
+			//범위 내에 존재할 경우
+			if (ni >= 0 && nj >= 0 && ni < N && nj < N) {
+				//집 있고, 방문하지 않은 경우
+				if (arr[ni][nj] == 1 && !visit[ni][nj]) {
+					dfs(ni,nj);
+				}
+			}
+		}
+	}
+
+}
